@@ -61,7 +61,7 @@ namespace AdoDotNet_AddressBookApplication
                             string newPhone = Console.ReadLine();
 
                             Contact contact = new Contact(newPhone);
-                            //addressBook.UpdateContact(id, contact);
+                            addressBook.UpdateContact(id, contact);
 
                             break;
                         }

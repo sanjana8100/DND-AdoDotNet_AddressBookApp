@@ -63,6 +63,35 @@ namespace AdoDotNet_AddressBookApplication
             }
         }
 
-        
+        public bool UpdateContact(int id, Contact contact)
+        {
+            try
+            {
+                sqlConnection.Open();
+
+                string query = $"UPDATE Contacts SET Phone = @Phone WHERE Id= @Id";
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+                sqlCommand.Parameters.AddWithValue("@Phone", contact.Phone);
+                sqlCommand.Parameters.AddWithValue("@Id", contact.Id);
+
+                int result = sqlCommand.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    Console.WriteLine($"{result} number of rows affected");
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
     }
 }
