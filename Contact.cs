@@ -8,7 +8,7 @@ namespace AdoDotNet_AddressBookApplication
 {
     internal class Contact
     {
-        public int Id { set; get; }
+        public int ContactId { set; get; }
         public string Name { set; get; }
         public string Email { set; get; }
         public string Phone { set; get; }

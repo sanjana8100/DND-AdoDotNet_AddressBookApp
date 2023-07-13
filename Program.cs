@@ -90,6 +90,15 @@ namespace AdoDotNet_AddressBookApplication
 
                             break;
                         }
+                    case 4:
+                        {
+                            Console.WriteLine("Enter the ID of the Contact you want to Display: ");
+                            int id = Convert.ToInt32(Console.ReadLine());
+
+                            Contact contact = addressBook.DisplayContact(id);
+
+                            break;
+                        }
                     case 8:
                         {
                             Environment.Exit(0);

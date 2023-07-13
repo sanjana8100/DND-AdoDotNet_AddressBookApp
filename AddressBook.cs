@@ -36,7 +36,7 @@ namespace AdoDotNet_AddressBookApplication
                 string insertQuery2 = $"Insert into ContactEmail Values (@ContactId, @Email)";
                 SqlCommand insertCommand2 = new SqlCommand(insertQuery2, sqlConnection);
 
-                insertCommand2.Parameters.AddWithValue("@ContactId", contact.Id);
+                insertCommand2.Parameters.AddWithValue("@ContactId", contact.ContactId);
                 insertCommand2.Parameters.AddWithValue("@Email", contact.Email);
 
                 int result2 = insertCommand2.ExecuteNonQuery();
@@ -73,7 +73,7 @@ namespace AdoDotNet_AddressBookApplication
                 SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
 
                 sqlCommand.Parameters.AddWithValue("@Phone", contact.Phone);
-                sqlCommand.Parameters.AddWithValue("@Id", contact.Id);
+                sqlCommand.Parameters.AddWithValue("@Id", contact.ContactId);
 
                 int result = sqlCommand.ExecuteNonQuery();
                 if (result > 0)
@@ -99,8 +99,8 @@ namespace AdoDotNet_AddressBookApplication
             {
                 sqlConnection.Open();
 
-                string query1 = $"Delete FROM ContactEmail WHERE Id = {id}";
-                string query2 = $"Delete FROM Contact WHERE Id = {id}";
+                string query1 = $"Delete FROM ContactEmail WHERE ContactId = {id}";
+                string query2 = $"Delete FROM Contact WHERE ContactId = {id}";
 
                 SqlCommand sqlCommand1 = new SqlCommand(query1, sqlConnection);
                 SqlCommand sqlCommand2 = new SqlCommand(query2, sqlConnection);
@@ -114,6 +114,53 @@ namespace AdoDotNet_AddressBookApplication
             {
                 Console.WriteLine(ex);
                 return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
+
+        public Contact DisplayContact(int id)
+        {
+            try
+            {
+                sqlConnection.Open();
+
+                string query = $"SELECT * From Contact JOIN ContactEmail ON Contact.ContactId = ContactEmail.ContactId where Contact.ContactId = {id}";
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+                List<Contact> list = new List<Contact>();
+
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    Contact contact = new Contact()
+                    {
+                        ContactId = (int)reader["ContactId"],
+                        Name = (string)reader["Name"],
+                        Phone = (string)reader["Phone"],
+                        Email = (string)reader["Email"],
+                        City = (string)reader["City"],
+                        State = (string)reader["State"],
+                        Zipcode = (string)reader["Zipcode"]
+                    };
+                    list.Add(contact);
+                }
+                foreach (Contact contact in list)
+                {
+                    if (contact.ContactId == id)
+                    {
+                        Console.WriteLine($"ContactId: {contact.ContactId}\t Name:- {contact.Name}\t Email:- {contact.Email}\t Phone:- {contact.Phone} \tCity:- {contact.City} \tState:- {contact.State} \tZIPCode:- {contact.Zipcode}");
+                        return contact;
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
             }
             finally
             {
