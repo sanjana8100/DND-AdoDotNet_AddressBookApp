@@ -106,6 +106,60 @@ namespace AdoDotNet_AddressBookApplication
 
                             break;
                         }
+                    case 6:
+                        {
+                            Console.WriteLine("Enter the details to add a contact: ");
+
+                            Console.Write("\nEnter name: ");
+                            string name = Console.ReadLine();
+
+                            Console.Write("Enter email: ");
+                            string email = Console.ReadLine();
+
+                            Console.Write("Enter phone number: ");
+                            string phone = Console.ReadLine();
+
+                            Console.Write("Enter state: ");
+                            string state = Console.ReadLine();
+
+                            Console.Write("Enter city: ");
+                            string city = Console.ReadLine();
+
+                            Console.Write("Enter zip: ");
+                            string zip = Console.ReadLine();
+
+                            Contact contact = new Contact(name, email, phone, state, city, zip);
+                            addressBook.AddByStoredProcedure(contact);
+
+                            break;
+                        }
+                    case 7:
+                        {
+                            Console.WriteLine("Enter the details to add a contact: ");
+
+                            Console.Write("\nEnter name: ");
+                            string name = Console.ReadLine();
+
+                            Console.Write("Enter email: ");
+                            string email = Console.ReadLine();
+
+                            Console.Write("Enter phone number: ");
+                            string phone = Console.ReadLine();
+
+                            Console.Write("Enter state: ");
+                            string state = Console.ReadLine();
+
+                            Console.Write("Enter city: ");
+                            string city = Console.ReadLine();
+
+                            Console.Write("Enter zip: ");
+                            string zip = Console.ReadLine();
+
+                            Contact contact = new Contact(name, email, phone, state, city, zip);
+                            addressBook.AddByStoredProcedureUsingTransaction(contact);
+
+                            break;
+                        }
                     case 8:
                         {
                             Environment.Exit(0);
