@@ -99,6 +99,13 @@ namespace AdoDotNet_AddressBookApplication
 
                             break;
                         }
+                    case 5:
+                        {
+                            Console.WriteLine("Displaying all the Contacts: ");
+                            List<Contact> list = addressBook.DisplayAllContacts();
+
+                            break;
+                        }
                     case 8:
                         {
                             Environment.Exit(0);

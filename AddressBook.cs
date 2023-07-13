@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Numerics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace AdoDotNet_AddressBookApplication
 {
@@ -166,6 +169,40 @@ namespace AdoDotNet_AddressBookApplication
             {
                 sqlConnection.Close();
             }
+        }
+
+        public List<Contact> DisplayAllContacts()
+        {
+            sqlConnection.Open();
+
+            List<Contact> list = new List<Contact>();
+
+            string query = $"SELECT * From Contact JOIN ContactEmail ON Contact.ContactId = ContactEmail.ContactId";
+            SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+
+            SqlDataReader reader = sqlCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                Contact contact = new Contact()
+                {
+                    ContactId = (int)reader["ContactId"],
+                    Name = (string)reader["Name"],
+                    Phone = (string)reader["Phone"],
+                    Email = (string)reader["Email"],
+                    City = (string)reader["City"],
+                    State = (string)reader["State"],
+                    Zipcode = (string)reader["Zipcode"]
+                };
+                list.Add(contact);
+
+            }
+
+            foreach (Contact contact in list)
+            {
+                Console.WriteLine($"ContactId: {contact.ContactId}\t Name:- {contact.Name}\t Email:- {contact.Email}\t Phone:- {contact.Phone} \tCity:- {contact.City} \tState:- {contact.State} \tZIPCode:- {contact.Zipcode}");
+            }
+            sqlConnection.Close();
+            return list;
         }
     }
 }
