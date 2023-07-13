@@ -93,5 +93,32 @@ namespace AdoDotNet_AddressBookApplication
             }
         }
 
+        public bool DeleteContact(int id)
+        {
+            try
+            {
+                sqlConnection.Open();
+
+                string query1 = $"Delete FROM ContactEmail WHERE Id = {id}";
+                string query2 = $"Delete FROM Contact WHERE Id = {id}";
+
+                SqlCommand sqlCommand1 = new SqlCommand(query1, sqlConnection);
+                SqlCommand sqlCommand2 = new SqlCommand(query2, sqlConnection);
+
+                sqlCommand1.ExecuteNonQuery();
+                sqlCommand2.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
     }
 }

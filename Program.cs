@@ -54,7 +54,7 @@ namespace AdoDotNet_AddressBookApplication
                         }
                     case 2:
                         {
-                            Console.Write("Enter the ID of the employee who's phone number you want to edit: ");
+                            Console.Write("Enter the ID of the Contact who's phone number you want to edit: ");
                             int id = Convert.ToInt32(Console.ReadLine());
 
                             Console.Write("Enter the new phone number: ");
@@ -62,6 +62,31 @@ namespace AdoDotNet_AddressBookApplication
 
                             Contact contact = new Contact(newPhone);
                             addressBook.UpdateContact(id, contact);
+
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.WriteLine("Enter the ID of the Contact you want to Delete: ");
+                            int id = Convert.ToInt32(Console.ReadLine());
+
+                            //addressBook.DisplayContact(id);
+
+                            Console.WriteLine("Are you sure you want to DELETE the Contact?");
+                            Console.WriteLine("1. YES \t 2. NO");
+                            int option = Convert.ToInt32(Console.ReadLine());
+                            switch (option)
+                            {
+                                case 1:
+                                    addressBook.DeleteContact(id);
+                                    break;
+                                case 2:
+                                    Console.WriteLine("Contact is NOT deleted!!!");
+                                    break;
+                                default:
+                                    Console.WriteLine("Select a valid option!!!");
+                                    break;
+                            }
 
                             break;
                         }
